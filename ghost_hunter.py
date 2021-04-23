@@ -112,42 +112,62 @@ class ghost():
     def dis(self, ano):
         x1, y1, x2, y2 = (int(self.x), int(self.y), int(ano.x), int(ano.y))
         return sqrt((x2-x1)**2+(y2-y1)**2)
-    def Left(self, s):
-        for i in range(self.speed*s):
-            if not self.c.coords(self.item)[0]<1:
-                self.hover(-1, 0)
-    def Right(self,s):
-        for i in range(self.speed*s):
-            if not self.c.coords(self.item)[2]>599:
-                self.hover(1, 0)
-    def Up(self,s):
-        for i in range(self.speed*s):
-            if not self.c.coords(self.item)[1]<1:
-                self.hover(0, -1)
-    def Down(self,s):
-        for i in range(self.speed*s):
-            if not self.c.coords(self.item)[3]>599:
-                self.hover(0, 1)
+    def Left(self, s, t=True):
+        if t:
+            for i in range(20):
+                if not self.c.coords(self.item)[0]<1:
+                    self.hover(-1, 0)
+        else:
+            for i in range(self.speed*s):
+                if not self.c.coords(self.item)[0]<1:
+                    self.hover(-1, 0)
+    def Right(self,s, t=True):
+        if t:
+            for i in range(20):
+                if not self.c.coords(self.item)[2]>599:
+                    self.hover(1, 0)
+        else:
+            for i in range(self.speed*s):
+                if not self.c.coords(self.item)[2]>599:
+                    self.hover(1, 0)
+    def Up(self,s, t=True):
+        if t:
+            for i in range(20):
+                if not self.c.coords(self.item)[1]>1:
+                    self.hover(0, -1)
+        else:
+            for i in range(self.speed*s):
+                if not self.c.coords(self.item)[1]<1:
+                    self.hover(0, -1)
+    def Down(self,s, t=True):
+        if t:
+            for i in range(20):
+                if not self.c.coords(self.item)[3]>599:
+                    self.hover(0, 1)
+        else:
+            for i in range(self.speed*s):
+                if not self.c.coords(self.item)[3]>599:
+                    self.hover(0, 1)
     def ran(self):
         i=randint(1,4)
         if i==1:
-            self.Right(1)
+            self.Right(1, False)
         elif i==2:
-            self.Left(1)
+            self.Left(1, False)
         elif i==3:
-            self.Up(1)
+            self.Up(1, False)
         elif i==4:
-            self.Down(1)
+            self.Down(1, False)
     def follow_x(self, ano):
         if ano.x>self.x:
-            self.Right(2)
+            self.Right(1)
         else:
-            self.Left(2)
+            self.Left(1)
     def follow_y(self, ano):
         if ano.y>self.y:
-            self.Down(2)
+            self.Down(1)
         else:
-            self.Up(2)
+            self.Up(1)
     def sets(self, x, y):
         self.hover(x-self.x, y-self.y)
     def upgrade(self):
@@ -181,6 +201,10 @@ def update(i):
                 p.play.health-=self.attack
                 p.play.set(300, 300)
                 self.upgrade()
+            if self.dis(p.play)<p.play.range:
+                self.c.itemconfig(self.item, fill='red')
+            else:
+                self.c.itemconfig(self.item, fill='white')
 def spawn():
     return ghost(c, choice([100, 500]), choice([100, 500]))
 
@@ -233,3 +257,4 @@ z=health, x=speed, c=attack, v=range''')
         how+=10
     setup()
 print('GAME_OVER')
+c.update()
