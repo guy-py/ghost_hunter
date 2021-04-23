@@ -113,17 +113,21 @@ class ghost():
         x1, y1, x2, y2 = (int(self.x), int(self.y), int(ano.x), int(ano.y))
         return sqrt((x2-x1)**2+(y2-y1)**2)
     def Left(self, s):
-        if not self.c.coords(self.item)[0]-self.speed<0:
-            self.hover(-self.speed*s, 0)
+        for i in range(self.speed*s):
+            if not self.c.coords(self.item)[0]<1:
+                self.hover(-1, 0)
     def Right(self,s):
-        if not self.c.coords(self.item)[2]+self.speed<0:
-            self.hover(self.speed*s, 0)
+        for i in range(self.speed*s):
+            if not self.c.coords(self.item)[2]>599:
+                self.hover(1, 0)
     def Up(self,s):
-        if not self.c.coords(self.item)[1]-self.speed<0:
-            self.hover(0, -self.speed*s)
+        for i in range(self.speed*s):
+            if not self.c.coords(self.item)[1]<1:
+                self.hover(0, -1)
     def Down(self,s):
-        if not self.c.coords(self.item)[3]+self.speed<0:
-            self.hover(0, self.speed*s)
+        for i in range(self.speed*s):
+            if not self.c.coords(self.item)[3]>599:
+                self.hover(0, 1)
     def ran(self):
         i=randint(1,4)
         if i==1:
@@ -166,7 +170,7 @@ def update(i):
             self.c.itemconfig(self.text, text=ig)
             if self.dis(p.play)<self.range:
                 self.c.itemconfig(self.item, outline='red')
-                if randint(1, int(self.walk_chance/3))==1:
+                if randint(1, int(self.walk_chance/4))==1:
                     self.follow_x(p.play)
                     self.follow_y(p.play)
             else:
