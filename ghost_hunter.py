@@ -3,7 +3,7 @@ from math import sqrt
 from random import randint, choice
 from time import sleep
 window=Tk()
-c=Canvas(window, height=600, width=600, bg='orange')
+c=Canvas(window, height=600, width=600, bg='black')
 c.pack()
 class p:
     sscore = 0
@@ -14,7 +14,7 @@ class p:
     l=0
 class player():
     def __init__(self, c, x, y):
-        self.item=c.create_rectangle(x-10, y-10, x+10, y+10, fill='blue')
+        self.item=c.create_rectangle(x-10, y-10, x+10, y+10, fill='white', outline='gray')
         self.x=x
         self.y=y
         self.health=15
@@ -189,7 +189,7 @@ def update(i):
                 ig=int(ig)
             self.c.itemconfig(self.text, text=ig)
             if self.dis(p.play)<self.range:
-                self.c.itemconfig(self.item, outline='red')
+                self.c.itemconfig(self.item, outline='Crimson')
                 if randint(1, int(self.walk_chance/4))==1:
                     self.follow_x(p.play)
                     self.follow_y(p.play)
@@ -204,7 +204,7 @@ def update(i):
             if self.dis(p.play)<p.play.range:
                 self.c.itemconfig(self.item, fill='red')
             else:
-                self.c.itemconfig(self.item, fill='white')
+                self.c.itemconfig(self.item, fill='black')
 def spawn():
     return ghost(c, choice([100, 500]), choice([100, 500]))
 
